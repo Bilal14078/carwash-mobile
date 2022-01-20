@@ -14,4 +14,17 @@ class UserPreferences {
     prefs.setInt("token", token);
     return true;
   }
+
+  // checking user email
+  static Future<String> getUserEmail() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    String email = prefs.getString("email") as String;
+    return email;
+  }
+
+  static Future<bool> setUserEmail(String email) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString("email", email);
+    return true;
+  }
 }

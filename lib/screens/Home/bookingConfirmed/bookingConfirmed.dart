@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:carwash/language/locale.dart';
 
 class BookingConfirmed extends StatelessWidget {
+  final bookingID;
+  BookingConfirmed(this.bookingID);
+
   @override
   Widget build(BuildContext context) {
     var locale = AppLocalizations.of(context)!;
@@ -44,6 +47,14 @@ class BookingConfirmed extends StatelessWidget {
                             .copyWith(fontSize: 15),
                         textAlign: TextAlign.center,
                       ),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Text("Booking No: " + this.bookingID.toString()!,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1!
+                              .copyWith(fontSize: 15)),
                       SizedBox(
                         height: 30,
                       ),

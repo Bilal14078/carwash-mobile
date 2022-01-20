@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:carwash/user_preferences.dart';
 import 'dart:convert';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signin extends StatefulWidget {
   @override
@@ -60,6 +61,7 @@ class _SigninState extends State<Signin> {
         await http.post(url, body: {'email': email, 'password': password});
     if (json.decode(response.body)['success'] == null) {
       UserPreferences.setToken(json.decode(response.body)['data']['id']);
+      UserPreferences.setUserEmail(json.decode(response.body)['data']['uid']);
       EasyLoading.dismiss();
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));

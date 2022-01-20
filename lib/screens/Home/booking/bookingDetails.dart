@@ -4,10 +4,16 @@ import 'package:carwash/screens/Home/payment/paymentMethods.dart';
 import 'package:carwash/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carwash/language/locale.dart';
+import 'package:carwash/user_preferences.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'bookingItem.dart' as bookingitem;
 
 class BookingDetails extends StatefulWidget {
   final bool newBooking;
-  BookingDetails(this.newBooking);
+  var selectedItems;
+
+  BookingDetails(this.newBooking, this.selectedItems);
 
   @override
   _BookingDetailsState createState() => _BookingDetailsState();
@@ -16,8 +22,29 @@ class BookingDetails extends StatefulWidget {
 class _BookingDetailsState extends State<BookingDetails> {
   bool switchValue = true;
 
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final contactController = TextEditingController();
+  final addressController = TextEditingController();
+  final brandController = TextEditingController();
+  final carModelController = TextEditingController();
+  final carNumberController = TextEditingController();
+  final messageController = TextEditingController();
+
+  bookingitem.NewBookingItem? bitem = null;
+  var userId;
+  var userEmail;
+  _BookingDetailsState() {}
+
+  Future getUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    this.userId = prefs.getInt("token");
+    this.userEmail = prefs.getString("email");
+  }
+
   @override
   Widget build(BuildContext context) {
+    getUserInfo();
     // var safeHeight = MediaQuery.of(context).size.height -
     //     AppBar().preferredSize.height -
     //     MediaQuery.of(context).padding.vertical;
@@ -45,6 +72,52 @@ class _BookingDetailsState extends State<BookingDetails> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              EntryField("First Name", "Enter First Name",
+                                  false, firstNameController),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              EntryField("Last Name", "Enter Last Name", false,
+                                  lastNameController),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              EntryField(
+                                  locale.contactNumber,
+                                  "Enter Contact Number",
+                                  false,
+                                  contactController),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              EntryField(locale.address, "Add Address", false,
+                                  addressController),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              EntryField("Car Brand", "Add Car Brand", false,
+                                  brandController),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              EntryField("Model", "Add Car Model", false,
+                                  carModelController),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              EntryField(
+                                  "Registration",
+                                  "Add Car Registration ",
+                                  false,
+                                  carNumberController),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              EntryField("Message", "Add your message", false,
+                                  messageController),
+                              SizedBox(
+                                height: 15,
+                              ),
                               RadiantGradientMask(
                                 child: Text(
                                   locale.serviceProvider!,
@@ -62,11 +135,6 @@ class _BookingDetailsState extends State<BookingDetails> {
                               SizedBox(
                                 height: 2,
                               ),
-                              Text(locale.dummyAddress1!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(color: subtitle))
                             ],
                           ),
                           Divider(),
@@ -86,98 +154,20 @@ class _BookingDetailsState extends State<BookingDetails> {
                                   height: 10,
                                 ),
                                 Text(
-                                  locale.car1!,
+                                  widget
+                                      .selectedItems["selectedVehicle"].title!,
                                   style: whiteFont,
                                 ),
                                 SizedBox(
                                   height: 2,
                                 ),
-                                Text(
-                                  locale.car1Number!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyText2!
-                                      .copyWith(color: subtitle),
-                                )
-                              ],
-                            ),
-                          ),
-                          Divider(),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RadiantGradientMask(
-                                      child: Text(
-                                        locale.arrangePickupAndDrop! + "(+\$10)",
-                                        overflow: TextOverflow.ellipsis,
-                                        style: whiteFont.copyWith(
-                                            color: Color(0xff29ee86)),
-                                      ),
-                                    ),
-                                    widget.newBooking
-                                        ? Container(
-                                            height: 5,
-                                            // width: 60,
-                                            child: Switch(
-                                                materialTapTargetSize:
-                                                    MaterialTapTargetSize
-                                                        .shrinkWrap,
-                                                activeColor: iconFgColor,
-                                                value: switchValue,
-                                                onChanged: (val) {
-                                                  setState(() {
-                                                    switchValue = val;
-                                                  });
-                                                }),
-                                          )
-                                        : SizedBox.shrink()
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Text(locale.serviceProviderWillpickup!,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyText2!
-                                        .copyWith(color: subtitle)),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  locale.selectPickupAddress!,
-                                  style: whiteFont.copyWith(fontSize: 11),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      locale.homeb!,
-                                      style: whiteFont.copyWith(fontSize: 11),
-                                    ),
-                                    SizedBox(
-                                      width: 5,
-                                    ),
-                                    Flexible(
-                                        child: Text(locale.dummyAddress2!,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText2!
-                                                .copyWith(color: subtitle))),
-                                    widget.newBooking
-                                        ? Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Colors.white,
-                                          )
-                                        : SizedBox.shrink()
-                                  ],
-                                )
+                                // Text(
+                                //   locale.car1Number!,
+                                //   style: Theme.of(context)
+                                //       .textTheme
+                                //       .bodyText2!
+                                //       .copyWith(color: subtitle),
+                                // )
                               ],
                             ),
                           ),
@@ -198,13 +188,13 @@ class _BookingDetailsState extends State<BookingDetails> {
                                   height: 10,
                                 ),
                                 Text(
-                                  locale.dummyDate1!,
+                                  widget.selectedItems["selectedDate"]!,
                                   style: whiteFont,
                                 ),
                                 SizedBox(
                                   height: 2,
                                 ),
-                                Text(locale.dummyTime1!,
+                                Text(widget.selectedItems["selectedTime"]!,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText2!
@@ -233,45 +223,20 @@ class _BookingDetailsState extends State<BookingDetails> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      locale.bodywash!,
+                                      widget.selectedItems["selectedService"]
+                                          .title!,
                                       style: whiteFont,
                                     ),
                                     Text(
-                                      "\$50",
+                                      "\$" +
+                                          widget
+                                              .selectedItems["selectedService"]
+                                              .price!,
                                       style: whiteFont,
                                     )
                                   ],
                                 ),
                                 SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      locale.interiorCleaning!,
-                                      style: whiteFont,
-                                    ),
-                                    Text(
-                                      "\$70",
-                                      style: whiteFont,
-                                    )
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      locale.pickUpAndDropCharges!,
-                                      style: whiteFont,
-                                    ),
-                                    Text(
-                                      "\$10",
-                                      style: whiteFont,
-                                    )
-                                  ],
-                                )
                               ],
                             ),
                           ),
@@ -289,7 +254,9 @@ class _BookingDetailsState extends State<BookingDetails> {
                                 ),
                                 RadiantGradientMask(
                                   child: Text(
-                                    "\$130",
+                                    "\$" +
+                                        widget.selectedItems["selectedService"]
+                                            .price!,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText1!
@@ -317,7 +284,35 @@ class _BookingDetailsState extends State<BookingDetails> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => PaymentMethods()));
+                                  builder: (context) => PaymentMethods(
+                                      new bookingitem.NewBookingItem(
+                                          0,
+                                          0,
+                                          this.userId,
+                                          widget
+                                              .selectedItems["selectedService"]
+                                              .id,
+                                          widget
+                                              .selectedItems["selectedService"]
+                                              .id,
+                                          widget.selectedItems["selectedDate"],
+                                          widget.selectedItems["selectedTime"],
+                                          widget
+                                              .selectedItems["selectedService"]
+                                              .price,
+                                          "Payment by card",
+                                          "0h 60min",
+                                          widget
+                                              .selectedItems["selectedVehicle"]
+                                              .title,
+                                          this.addressController.text,
+                                          this.brandController.text,
+                                          this.carModelController.text,
+                                          1,
+                                          this.messageController.text,
+                                          this.carNumberController.text,
+                                          21.23121,
+                                          23.232131))));
                         },
                         child: RectGradientButton(locale.processToPayment)),
                   )

@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future getSelectedCompanyCars() async {
     final prefs = await SharedPreferences.getInstance();
-    var companyId = prefs.getInt("token");
+    var userId = prefs.getInt("token");
     var url = Uri.parse(
         'https://carwash-back.herokuapp.com/company/v1/vehicle_types.json');
     var response = await http.get(url);
@@ -808,7 +808,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => BookingDetails(true)));
+                              builder: (context) => BookingDetails(true, {
+                                    "selectedVehicle": this.selectedCar,
+                                    "selectedService": this.selectedService,
+                                    "selectedDate": this.selectedDate,
+                                    "selectedTime": this.selectedTime
+                                  })));
                     },
                     child: QuickWashServices({
                       "selectedVehicle": this.selectedCar,

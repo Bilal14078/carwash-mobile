@@ -125,7 +125,8 @@ class MyBookings extends StatelessWidget {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => BookingDetails(false)));
+                                builder: (context) =>
+                                    BookingDetails(false, null)));
                       else
                         Navigator.push(
                             context,

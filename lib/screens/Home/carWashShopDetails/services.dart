@@ -87,7 +87,7 @@ class _ServicesState extends State<Services> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => BookingDetails(true)));
+                        builder: (context) => BookingDetails(true, null)));
               },
               child: RectGradientButton(locale.proceedToPay! + " \$120")),
         ),
