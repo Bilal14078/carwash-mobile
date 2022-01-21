@@ -64,7 +64,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
         context,
         MaterialPageRoute(
             builder: (context) =>
-                BookingConfirmed(json.decode(response.body)['id'])));
+                BookingConfirmed(json.decode(response.body))));
   }
 
   @override

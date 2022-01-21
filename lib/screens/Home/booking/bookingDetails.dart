@@ -34,7 +34,9 @@ class _BookingDetailsState extends State<BookingDetails> {
   bookingitem.NewBookingItem? bitem = null;
   var userId;
   var userEmail;
-  _BookingDetailsState() {}
+  _BookingDetailsState() {
+    this.getUserInfo();
+  }
 
   Future getUserInfo() async {
     final prefs = await SharedPreferences.getInstance();
@@ -44,7 +46,7 @@ class _BookingDetailsState extends State<BookingDetails> {
 
   @override
   Widget build(BuildContext context) {
-    getUserInfo();
+    //getUserInfo();
     // var safeHeight = MediaQuery.of(context).size.height -
     //     AppBar().preferredSize.height -
     //     MediaQuery.of(context).padding.vertical;
@@ -154,8 +156,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                                   height: 10,
                                 ),
                                 Text(
-                                  widget
-                                      .selectedItems["selectedVehicle"].title!,
+                                  widget.selectedItems["selectedVehicle"].title,
                                   style: whiteFont,
                                 ),
                                 SizedBox(
@@ -188,13 +189,13 @@ class _BookingDetailsState extends State<BookingDetails> {
                                   height: 10,
                                 ),
                                 Text(
-                                  widget.selectedItems["selectedDate"]!,
+                                  widget.selectedItems["selectedDate"],
                                   style: whiteFont,
                                 ),
                                 SizedBox(
                                   height: 2,
                                 ),
-                                Text(widget.selectedItems["selectedTime"]!,
+                                Text(widget.selectedItems["selectedTime"],
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyText2!
@@ -224,7 +225,7 @@ class _BookingDetailsState extends State<BookingDetails> {
                                   children: [
                                     Text(
                                       widget.selectedItems["selectedService"]
-                                          .title!,
+                                          .title,
                                       style: whiteFont,
                                     ),
                                     Text(

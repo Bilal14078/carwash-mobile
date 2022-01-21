@@ -50,14 +50,14 @@ class BookingConfirmed extends StatelessWidget {
                       SizedBox(
                         height: 30,
                       ),
-                      Text("Booking No: " + this.bookingID.toString()!,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(fontSize: 15)),
-                      SizedBox(
-                        height: 30,
-                      ),
+                      // Text("Booking No: " + this.bookingID.toString(),
+                      //     style: Theme.of(context)
+                      //         .textTheme
+                      //         .bodyText1!
+                      //         .copyWith(fontSize: 15)),
+                      // SizedBox(
+                      //   height: 30,
+                      // ),
                       Text(locale.haveAGreatDay!,
                           style: Theme.of(context)
                               .textTheme
