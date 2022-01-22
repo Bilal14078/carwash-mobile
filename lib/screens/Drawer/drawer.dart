@@ -18,6 +18,18 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatefulWidget {
+  var userId, userEmail = "";
+
+  MyDrawer() {
+    getUserInfo();
+  }
+
+  Future getUserInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+    this.userId = prefs.getInt("token");
+    this.userEmail = prefs.getString("email").toString();
+  }
+
   @override
   _MyDrawerState createState() => _MyDrawerState();
 }
@@ -105,21 +117,21 @@ class _MyDrawerState extends State<MyDrawer> {
                       height: 10,
                     ),
                     Text(
-                      locale.dummyName1!,
+                      widget.userEmail,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MyProfile()));
-                      },
-                      child: Text(
-                        locale.viewProfile!,
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                    )
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //         context,
+                    //         MaterialPageRoute(
+                    //             builder: (context) => MyProfile()));
+                    //   },
+                    //   child: Text(
+                    //     locale.viewProfile!,
+                    //     style: Theme.of(context).textTheme.bodyText2,
+                    //   ),
+                    // )
                   ],
                 ),
                 decoration:
@@ -144,35 +156,35 @@ class _MyDrawerState extends State<MyDrawer> {
                     ),
                     locale.myBookings),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyCars()));
-                },
-                child: DrawerListTile(
-                    Icon(Icons.drive_eta, color: iconFgColor), locale.myCars),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyAddresses()));
-                },
-                child: DrawerListTile(
-                    Icon(Icons.location_on, color: iconFgColor),
-                    locale.myAddresses),
-              ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Favourites()));
-                },
-                child: DrawerListTile(
-                    Icon(Icons.favorite_outlined, color: iconFgColor),
-                    locale.favourites),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => MyCars()));
+              //   },
+              //   child: DrawerListTile(
+              //       Icon(Icons.drive_eta, color: iconFgColor), locale.myCars),
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => MyAddresses()));
+              //   },
+              //   child: DrawerListTile(
+              //       Icon(Icons.location_on, color: iconFgColor),
+              //       locale.myAddresses),
+              // ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => Favourites()));
+              //   },
+              //   child: DrawerListTile(
+              //       Icon(Icons.favorite_outlined, color: iconFgColor),
+              //       locale.favourites),
+              // ),
               GestureDetector(
                 onTap: () {
                   Navigator.pop(context);
@@ -184,15 +196,15 @@ class _MyDrawerState extends State<MyDrawer> {
                 child: DrawerListTile(Icon(Icons.language, color: iconFgColor),
                     locale.changeLanguage),
               ),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ContactUs()));
-                },
-                child: DrawerListTile(
-                    Icon(Icons.mail, color: iconFgColor), locale.contactUs),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     Navigator.pop(context);
+              //     Navigator.push(context,
+              //         MaterialPageRoute(builder: (context) => ContactUs()));
+              //   },
+              //   child: DrawerListTile(
+              //       Icon(Icons.mail, color: iconFgColor), locale.contactUs),
+              // ),
               GestureDetector(
                 onTap: () {
                   signOut();

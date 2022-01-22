@@ -11,12 +11,15 @@ import 'package:carwash/screens/Home/bookingConfirmed/bookingConfirmed.dart';
 import 'package:carwash/screens/Home/carWashShopDetails/shopDetails2.dart';
 import 'package:carwash/screens/Home/serviceLocation/serviceLocation.dart';
 import 'package:carwash/screens/Home/storeBanner.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:carwash/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 import 'dart:convert';
+
 import 'dart:io';
 
 class HomeScreen extends StatefulWidget {
@@ -106,6 +109,29 @@ class _HomeScreenState extends State<HomeScreen> {
   int currentTimeIndex = -1;
 
   Color iconColor = Color(0xff29ee86);
+
+  showValidationError() {
+    EasyLoading.showError(
+        'select vehicle, service & datetime before continuing');
+
+    // Future.delayed(const Duration(milliseconds: 2000), () {
+    //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //       content: Text(
+    //           "Please select vehicle, service & datetime before continuing."),
+    //       backgroundColor: Colors.red));
+
+    //   setState(() {
+    //     // Here you can write your code for open new view
+    //   });
+    // });
+
+    // WidgetsBinding.instance?.addPostFrameCallback((_) => setState(() {
+    //       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    //           content: Text(
+    //               "Please select vehicle, service & datetime before continuing."),
+    //           backgroundColor: Colors.red));
+    //     }));
+  }
 
   carsListView(BuildContext context, var height) {
     var locale = AppLocalizations.of(context)!;
@@ -329,7 +355,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
                       children: [
-                        Text(locale.june!,
+                        Text("Jan",
                             style: currentDateIndex == index
                                 ? Theme.of(context).textTheme.bodyText1
                                 : Theme.of(context)
@@ -343,8 +369,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           onTap: () {
                             setState(() {
                               currentDateIndex = index;
-                              whenDate =
-                                  (index + 1).toString() + " " + locale.june!;
+                              whenDate = (index + 1).toString() + " Jan";
                               this.selectedDate = whenDate;
                             });
                           },
@@ -804,25 +829,28 @@ class _HomeScreenState extends State<HomeScreen> {
               ? Positioned(
                   top: safeHeight * 0.4,
                   child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => BookingDetails(true, {
-                                    "selectedVehicle": this.selectedCar,
-                                    "selectedService": this.selectedService,
-                                    "selectedDate": this.selectedDate,
-                                    "selectedTime": this.selectedTime
-                                  })));
-                    },
-                    child: QuickWashServices({
-                      "selectedVehicle": this.selectedCar,
-                      "selectedService": this.selectedService,
-                      "selectedDate": this.selectedDate,
-                      "selectedTime": this.selectedTime
-                    }),
-                  ),
-                )
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BookingDetails(true, {
+                                      "selectedVehicle": this.selectedCar,
+                                      "selectedService": this.selectedService,
+                                      "selectedDate": this.selectedDate,
+                                      "selectedTime": this.selectedTime
+                                    })));
+                      },
+                      child: this.selectedCar != null &&
+                              this.selectedService != null &&
+                              this.selectedDate != null &&
+                              this.selectedTime != null
+                          ? QuickWashServices({
+                              "selectedVehicle": this.selectedCar,
+                              "selectedService": this.selectedService,
+                              "selectedDate": this.selectedDate,
+                              "selectedTime": this.selectedTime
+                            })
+                          : showValidationError()))
               : Container()
         ],
       ),

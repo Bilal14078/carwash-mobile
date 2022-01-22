@@ -10,9 +10,9 @@ bool isDirectionRTL(BuildContext context) {
 }
 
 class QuickWashServices extends StatelessWidget {
-  QuickWashServices(selectedItems) {
-    var a = selectedItems;
-  }
+  final selectedItems;
+
+  QuickWashServices(this.selectedItems);
 
   @override
   Widget build(BuildContext context) {
@@ -50,15 +50,15 @@ class QuickWashServices extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50),
                           border: Border.all(color: Colors.lightGreen)),
                       child: Icon(
-                        Icons.call,
+                        Icons.book_online,
                         color: Colors.green,
                         size: 13,
                       ),
                     ),
                     Column(
                       children: [
-                        Text(locale.distance!),
-                        Text(locale.dummyDistance!,
+                        Text(locale.servicesSelected!),
+                        Text(this.selectedItems['selectedService']?.title,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black))
@@ -67,7 +67,9 @@ class QuickWashServices extends StatelessWidget {
                     Column(
                       children: [
                         Text(locale.cost!),
-                        Text("\$ 60",
+                        Text(
+                            "\$ " +
+                                this.selectedItems['selectedService']?.price,
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black))

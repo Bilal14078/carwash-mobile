@@ -40,7 +40,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
     var modal = {
       "booking_address": widget._bookingItem?.booking_address,
       "brand": widget._bookingItem?.brand,
-      "date": widget._bookingItem?.date,
+      "date": DateTime.now().toString(),
       "message": widget._bookingItem?.message,
       "model": widget._bookingItem?.model,
       "package_id": widget._bookingItem?.package_id.toString(),
@@ -71,7 +71,7 @@ class _PaymentMethodsState extends State<PaymentMethods> {
   Widget build(BuildContext context) {
     var locale = AppLocalizations.of(context)!;
     // var selected = 1;
-    List titles = [locale.payPal, locale.creditCard, locale.cashOnDelivery];
+    List titles = [locale.creditCard, locale.cashOnDelivery];
     return FadedSlideAnimation(
       Scaffold(
         appBar: AppBar(
@@ -122,11 +122,11 @@ class _PaymentMethodsState extends State<PaymentMethods> {
                 ),
                 ListView.builder(
                   shrinkWrap: true,
-                  itemCount: 3,
+                  itemCount: 2,
                   itemBuilder: (BuildContext context, int index) {
                     return Container(
                       color: Theme.of(context).backgroundColor,
-                      margin: EdgeInsets.symmetric(vertical: 3),
+                      margin: EdgeInsets.symmetric(vertical: 2),
                       child: RadioListTile(
                         title: Text(titles[index],
                             style: Theme.of(context)

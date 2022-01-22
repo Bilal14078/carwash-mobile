@@ -73,7 +73,7 @@ class MyBookings extends StatelessWidget {
       }
       BookingItem bitem = BookingItem(
           firstname,
-          b['model'].toString(),
+          b['vehicle_type'].toString(),
           b['date'].toString(),
           b['time'].toString(),
           b['total'].toString(),
@@ -174,7 +174,7 @@ class MyBookings extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
-                                      Text(locale.selectCar!,
+                                      Text(locale.selectCarType!,
                                           style: TextStyle(color: subtitle)),
                                       SizedBox(
                                         width: 40,
